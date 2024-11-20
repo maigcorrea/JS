@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datos Fetch</title>
+</head>
+<body>
+    
+    <script>
+        const url="https://jsonplaceholder.typicode.com/posts";
+        //Te promete que te convertirá ese JSON que viene del servidor, pero no se cuanto tardaré, entonces, cuando lo haré, pero te devuelvo una respuesta seguro(ya sea de error o favorable)
+        fetch(url)//El fetch en sí es una promesa
+        .then(res=>res.json())//Hay que convertir la respuesta JSON a objeto para que js lo entienda, la restuesta es otra promesa por lo que hay que hacer otro callback
+        .then(datos=>{
+            datos.forEach(dato => {
+                document.write(`${dato.title} <br>`);//Para cada dato muestro su título
+            });
+        })
+        .catch(error=>console.log(error));
+    </script>
+</body>
+</html>
