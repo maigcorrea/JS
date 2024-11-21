@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://bootswatch.com/5/pulse/bootstrap.min.css">
+</head>
+<body>
+    <div class="container my-5 border p-5">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+
+                <!-- <div class="card text-white bg-primary mb-3 p-3">
+                    <div class="card-header"><img src="https://img.rtve.es/imagenes/orquesta-sinfonica-coro-rtve/1485450276539.jpg" alt="" class="img-fluid">
+                    </div>
+                    <div class="card-body">
+                      <h4 class="card-title">Primary card title</h4>
+                      <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam, excepturi. Deserunt fugiat sed dolores ut quam iusto, minima nemo esse consequatur voluptatum nulla ex neque ipsam animi labore consectetur dolore, facilis quod. Porro ad veniam iusto, in nobis corporis culpa nostrum voluptatibus perspiciatis nihil veritatis, sunt quis minus quam est?</p>
+                      <a href="fetch.html" class="btn btn-info">Volver</a>
+                    </div>
+                  </div> -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const url="https://www.rtve.es/api/noticias.json";
+        //SACAR LA NOTICIA POR LA POSICIÓN (Cuando no hay un id en el JSON)
+        // const colmd=document.querySelector(".row>div");
+        // const host=window.location.href; //Sacar la url de la página
+        
+        // //Sacar el id de la url con SPLIT
+        // const id=host.split('?id=')[1];//El 1 es la posición del array donde se devuelve el id
+
+        // fetch(url)
+        // .then(resp=>resp.json())
+        // .then(datos=>{
+        //     const noticias=datos.page.items;
+        //     colmd.innerHTML = `
+        //         <div class="card text-white bg-primary mb-3 p-3">
+        //             <div class="card-header"><img src=${noticias[id].image} alt="" class="img-fluid">
+        //             </div>
+        //             <div class="card-body">
+        //               <h4 class="card-title">${noticias[id].title}</h4>
+        //               <p class="card-text">${noticias[id].summary}</p>
+        //               <a href="fetch.html" class="btn btn-info">Volver</a>
+        //             </div>
+        //         </div>
+        //     `;
+        // })
+
+
+
+
+
+
+
+        //SACAR LA NOTICIA DESDE EL ID DEL JSON
+        // const colmd=document.querySelector(".row>div");
+        // const host=window.location.href; //Sacar la url de la página
+        
+        // //Sacar el id de la url con SPLIT
+        // const id=host.split('?id=')[1];//El 1 es la posición del array donde se devuelve el id
+        //     console.log(id);
+
+        //Sacar directamente el id de la url
+        // const host1=new url(window.location.href).searchParams;//Esto devuelve una instancia de una url en la que buscar parámetros
+        // const id1=host1.get("id");//Se saca el parámetro llamado id
+        // //También se puede hacer directamente
+        // const host2=new url(window.location.href).searchParams.get("id");
+
+        
+        // fetch(url)
+        // .then(resp=>resp.json())
+        // .then(datos=>{     
+        //     const noticias=datos.page.items;
+        //     noticias.forEach(noticia => { //Se recorre cada noticia y se comprueba si su id coincide con el id de la url. Si coincide, se imprimen sus datos
+        //         //También se puede hacer con el find y con el filter (versión Pacho): //const notic= json.page.items.find(element)=>element.id==id); Para obtener los datos: notic.image, notic.title etc.
+        //         if(noticia.id==id){
+        //             colmd.innerHTML = `
+        //         <div class="card text-white bg-primary mb-3 p-3">
+        //             <div class="card-header"><img src=${noticia.image} alt="" class="img-fluid">
+        //             </div>
+        //             <div class="card-body">
+        //               <h4 class="card-title">${noticia.title}</h4>
+        //               <p class="card-text">${noticia.summary}</p>
+        //               <a href="fetch.html" class="btn btn-info">Volver</a>
+        //               <a href=${noticia.htmlShortUrl} class="btn btn-info">Ver más</a>
+        //             </div>
+        //         </div>
+        //     `;
+        //         }
+        //     });
+            
+        // })
+
+
+
+
+
+
+        //Sacar directamente el id de la url
+        // const host1=new url(window.location.href).searchParams;//Esto devuelve una instancia de una url en la que buscar parámetros
+        // const id1=host1.get("id");//Se saca el parámetro llamado id
+        // //También se puede hacer directamente
+        // const host2=new url(window.location.href).searchParams.get("id");
+    </script>
+</body>
+</html>

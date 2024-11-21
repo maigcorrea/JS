@@ -74,7 +74,7 @@
         .then(datos=>{
             // console.log(datos.page.items);
             cargando.style.display="none";
-            datos.page.items.forEach(dato => {
+            datos.page.items.forEach((dato,id) => {//Key representa el id (Es la posición de la noticia. Esto se realiza cuando no hay ids en el JSON)
                 row.innerHTML+=`
                     <div class="col-md-4">
                             <!-- Inicio col md -->
@@ -83,7 +83,7 @@
                             <div class="card-header"><img src=${dato.image} alt="" class="img-fluid"></div>
                             <div class="card-body">
                             <h4 class="card-title">${dato.title}</h4>
-                            <a href="detalles.html?id=" class="btn btn-danger my-3">Más info</a>
+                            <a href="detalles.html?id=${dato.id}" class="btn btn-danger my-3">Más info</a> //${id} para hacerlo con posición
                             </div>
                         </div>
 
