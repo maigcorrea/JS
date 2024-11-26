@@ -42,10 +42,23 @@
 
     <div class="container my-5" id="categorias">
         <div class="row">
-            <select name="" id="" class="col-md-6 offset-md-3 py-2">
+            <select name="" id="" class="col-md-6 offset-md-3 py-2" onchange="mostrarRecetasDeLaCategoria(this.value)">
                 <option value="" disabled selected>--Seleccionar categoría</option>
                 <!-- <option value="">opcion1</option> CARGAR DE FORMA DINAMICA CON JS-->
             </select>
+        </div>
+    </div>
+
+
+    <div class="container my-5" id="recetas">
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-header">Header</div>
+                <div class="card-body">
+                  <h4 class="card-title">Primary card title</h4>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -115,6 +128,20 @@
                             <option value="${dato.strCategory}">${dato.strCategory}</option>
                         `;
                     });
+                })
+            }
+
+            //hacer una función de fetching de datos
+
+        //2
+            function mostrarRecetasDeLaCategoria(cat){
+                const url2="https://www.themealdb.com/api/json/v1/1/filter.php?c="+cat;
+                console.log(url);
+
+                fetch(url2).
+                then(response=>response.json()).//Convertir la respuesta un JSON, esto devuelve otra promesa
+                then(datos=>{
+                    return datos;
                 })
             }
 
