@@ -23,6 +23,11 @@
                     color: black;
                 }
         }
+
+        .modal-content{
+            height: 800px;
+            overflow-y: scroll;
+        }
         
 
     </style>
@@ -51,7 +56,8 @@
 
 
     <div class="container my-5" id="recetas">
-        <div class="col-md-4">
+        <div class="row">
+            <!-- <div class="col-md-4">
             <div class="card text-white bg-primary mb-3">
                 <div class="card-header">Header</div>
                 <div class="card-body">
@@ -59,7 +65,9 @@
                   <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                 </div>
             </div>
+        </div> -->
         </div>
+        
     </div>
 
 
@@ -84,19 +92,20 @@
 
             <div class="modal-body">
                 <div class="text-center">
-                    <img src="https://www.themealdb.com/images/category/beef.png" alt="" class="mg-fluid">
+                    <img src="" alt="" class="img-fluid">
                 </div>
-                <p>texto</p>
+                <h2>Instrucciones</h2>
+                <p></p>
                 <h2>Ingredientes</h2>
                 <ul>
-                    <li>Ingrediente 1</li>
-                    <li>Ingrediente 2</li>
+                    <!-- aqui van los li -->
                 </ul>
             </div>
 
 
             <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="guardarComoFavorito()">Guardar Favorito</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
             </div>
 
 
@@ -110,18 +119,27 @@
     <script>
         //CONST Y VAR
         let selectorCategorias=document.querySelector("#categorias select"); 
-        const url="https://www.themealdb.com/api/json/v1/1/categories.php";
-
+        
+        let row=document.querySelector("#recetas .row")
         
 
 
         //FUNCIONES
-        //1
+
+        
+
+        //Función para obtener datos de la API pasandole la url
+        function obtenerDatos(url){
+            return fetch(url).
+            then(respuesta=>respuesta.json());
+        }
+
+        //Función para cargar categorias (las opciones/datos del select)
             function cargarCategorias(){
-                fetch(url).
-                then(respuesta=>respuesta.json()).//Convertir la respuesta un JSON, esto devuelve otra promesa
-                then(datos=>{
-                    console.log(datos);
+                const url1="https://www.themealdb.com/api/json/v1/1/categories.php";
+                obtenerDatos(url1)
+                .then(datos=>{
+                
                     datos.categories.forEach(dato => {
                         
                         selectorCategorias.innerHTML+=`
@@ -131,24 +149,88 @@
                 })
             }
 
+
+
             //hacer una función de fetching de datos
 
         //2
             function mostrarRecetasDeLaCategoria(cat){
                 const url2="https://www.themealdb.com/api/json/v1/1/filter.php?c="+cat;
-                console.log(url);
 
-                fetch(url2).
-                then(response=>response.json()).//Convertir la respuesta un JSON, esto devuelve otra promesa
-                then(datos=>{
-                    return datos;
+                // console.log(url2);
+                row.innerHTML="";
+                obtenerDatos(url2)
+                .then(recetas=>{
+                    recetas.meals.forEach(receta=>{
+                        row.innerHTML+=`
+                            <div class="col-md-4">
+                                <div class="card text-white bg-primary mb-3">
+                                    <div class="card-header">
+                                        <img src=${receta.strMealThumb} class="img-fluid">
+                                    </div>
+                                    <div class="card-body">
+                                    <h4 class="card-title">${receta.strMeal}</h4>
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#emergente" onclick="mostrarReceta(${receta.idMeal})">
+                                        Abrir receta
+                                    </button>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    })
                 })
+
+                // fetch(url).
+                // then(response=>response.json()).//Convertir la respuesta un JSON, esto devuelve otra promesa
+                // then(datos=>{
+                //     return datos;
+                // })
             }
+
+
+            //Abrir emergente con el modal con los datos de la receta
+            function mostrarReceta(idReceta){
+                    const url3="https://www.themealdb.com/api/json/v1/1/lookup.php?i="+idReceta;
+                    let modalTitle=document.querySelector(".modal-title");
+                    let modalContenido=document.querySelector(".modal-body p");
+                    let modalImg=document.querySelector(".modal-body img");
+                    let modalUl=document.querySelector(".modal-body ul");
+
+                    obtenerDatos(url3)
+                    .then(receta=>{
+                        console.log(receta.meals[0].strMeal)
+                        modalTitle.textContent=receta.meals[0].strMeal;
+                        modalContenido.textContent=receta.meals[0].strInstructions;
+                        modalImg.setAttribute("src",receta.meals[0].strMealThumb);
+
+                        modalUl.innerHTML="";
+                        for(let i=1;i<=20;i++){
+                            if(receta.meals[0]["strIngredient"+i]!="" && receta.meals[0]["strIngredient"+i]!=null){ //No se puede utilizar . para concatenar porque el ingrediente es dinámico, va a cambiar
+                                modalUl.innerHTML+=`
+                                    <li>${receta.meals[0]["strIngredient"+i]} - ${receta.meals[0]["strMeasure"+i]} </li>
+                                `;
+                            }
+                        }
+                        
+                    });
+
+                    let botonFavoritos=document.querySelector(".modal-footer button:nth-child(1)");
+                    
+            }
+
+            //Funcion para guardar la receta en favoritos
+            function guardarComoFavorito(){
+                console.log("guardado");
+                //SE MUESTRA UN MSJ EN UN MODAL QUE PONGA GUARDADO CON EXITO
+                //SE GUARDA EN LA PÁGINA DE FAVORITOS
+            }
+            
 
         //CÓDIGO
 
         document.addEventListener("DOMContentLoaded",()=>{
             cargarCategorias();
+            obtenerDatos();
         })
     </script>
 </body>
